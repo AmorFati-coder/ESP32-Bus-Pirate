@@ -1,5 +1,7 @@
 # ESP32 Bus Pirate Custom Fork
 
+![Custom ESP32-S3 N16R8 build](images/custom_build_20260413.png)
+
 这个仓库不是原版说明文档，而是当前这套自定义硬件的适配说明。
 
 适配目标硬件：
