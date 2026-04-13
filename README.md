@@ -1,191 +1,176 @@
-# ESP32 Bus Pirate
+# ESP32 Bus Pirate Custom Fork
 
-![Logo banner of the ESP32 Bus Pirate firmware](images/logo_protocols_banner_small.png)
+这个仓库不是原版说明文档，而是当前这套自定义硬件的适配说明。
 
+适配目标硬件：
 
-**ESP32 Bus Pirate** is an open-source firmware that turns your device into a multi-protocol hacker's tool, inspired by the [legendary Bus Pirate](https://buspirate.com/).
+- `ESP32-S3 N16R8`
+- `ST7789 240x320 SPI` 屏幕
+- `AO` 四键 AD 按键模块
+- `PN532` RFID 模块
+- `CC1101` SubGHz 模块
+- `VS1838B` 红外接收头
+- 红外发射管
 
-It supports sniffing, sending, scripting, and interacting with various digital protocols (I2C, UART, 1-Wire, SPI, etc.) via a serial terminal or web-based CLI. It also communicates with radio protocols like Bluetooth, Wi-Fi, Sub-GHz and RFID.
+## 当前硬件接线
 
-Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/) to install the firmware in one click. See the [Wiki](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki) for step-by-step guides on every mode and command. Check [ESP32 Bus Pirate Scripts](https://github.com/geo-tp/ESP32-Bus-Pirate-Scripts) for a collection of scripts.
+### ST7789
 
-For hardware extensions, see the [ESP32 Bus Expander](https://github.com/geo-tp/ESP32-Bus-Expander) for additional radio interfaces, and the [ESP32 Bus Pirate Dock](https://github.com/AndreiVladescu/ESP32-Bus-Pirate-Dock) to use original [Bus Pirate](https://buspirate.com/) adapters and accessories.
+- `SCK = GPIO12`
+- `MOSI = GPIO11`
+- `CS = GPIO10`
+- `DC = GPIO14`
+- `RST = GPIO15`
+- `BL = GPIO16`
 
-![Demo showing the different mode of the ESP32 Bus Pirate firmware](images/help.gif)
-![Demo showing the LittleFS file system of the ESP32 Bus Pirate firmware](images/littlefs.gif)
+### AD 按键
 
-## Features
+- `AO = GPIO1`
+- `K1 -> LEFT`
+- `K2 -> RIGHT`
+- `K3 -> OK`
+- `K4 -> DOWN`
 
-- Interactive command-line interface (CLI) via **USB Serial or WiFi Web**.
-- **Modes for:**
-   - [HiZ](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/01-HiZ) (default)
-   - [I2C](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/05-I2C) (scan, glitch, slave mode, dump, eeprom)
-   - [SPI](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/06-SPI) (eeprom, flash, sdcard, slave mode)
-   - [UART](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/03-UART) / [Half-Duplex UART](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/04-HDUART) (bridge, read, write)
-   - [1WIRE](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/02-1WIRE) (ibutton, eeprom)
-   - [2WIRE](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/07-2WIRE) (sniff, smartcard) / [3WIRE](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/08-3WIRE) (eeprom)
-   - [DIO](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/09-DIO) (Digital I/O, read, pullup, set, pwm)
-   - [Infrared](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/11-INFRARED) (send, record, universal remote)
-   - [USB](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/12-USB) (HID, mouse, keyboard, gamepad, storage)
-   - [Bluetooth](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/13-BLUETOOTH) (BLE HID, scan, spoofing, sniffing)
-   - [Wi-Fi](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/14-WIFI) / [Ethernet](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/18-ETHERNET) (sniff, deauth, nmap, netcat)
-   - [JTAG](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/15-JTAG) (scan pinout, SWD)
-   - [LED](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/10-LED) (animations, set LEDs)
-   - [I2S](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/16-I2S) (test speakers, mic, play sound)
-   - [CAN](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/17-CAN) (sniff, send and receive frames)
-   - [SUBGHZ](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/19-SUBGHZ) (analyze, record, replay)
-   - [RFID](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/20-RFID) (read, write, clone)
-   - [RF24](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/21-RF24) (scan, send, receive)
-   - [FM](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/22-FM) (analyze, broadcast)
-   - [CELL](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/23-CELL) (dump sim card, sms, call)
+### PN532
 
+- `SDA = GPIO8`
+- `SCL = GPIO18`
 
-- **Protocol sniffers** for I2C, SPI, 1Wire, 2wire, CAN, Wi-Fi, Bluetooth, SubGhz.
-- Baudrate **auto-detection**, AT commands and various tools for UART.
-- Registers manipulation, **EEPROM dump tools**, identify devices for I2C.
-- Read all sort of **EEPROM, Flash** and various others tools for SPI.
-- Scripting using **Bus Pirate-style bytecode** instructions or **Python**.
-- Device-B-Gone command with more than **80 supported INFRARED protocols**.
-- Direct I/O management, **PWM, servo**, pulse.
-- Analyze radio signals and frequencies **on every bands**.
-- Near than **50 addressable LEDs protocols** supported.
-- **Ethernet and WiFi** are supported to access networks.
-- Import and export data with the **LittleFS over HTTP.**
+### CC1101
 
-## Supported Devices
+- `CSN = GPIO9`
+- `SCK = GPIO12`
+- `MOSI = GPIO11`
+- `MISO = GPIO13`
+- `GDO0 = GPIO4`
 
+### 红外
 
-| Device               |                                     | Description                       |
-|-----------------------|------------------------------------------|---------------------------------------------------|
-| **ESP32 S3 Dev Kit**  | ![Photo of the ESP32 S3 Dev Kit](/images/s3-devkit_s.jpg)     | More than 20 available GPIO, 1 button |
-| **M5 Cardputer**      | ![Photo of the M5 Cardputer](/images/cardputer_s.png)            | 2 GPIO (Grove), screen, keyboard, mic, speaker, IR TX, SD card, battery, [standalone mode](#standalone-mode-for-the-cardputer)            |
-| **M5 Cardputer ADV**  | ![Photo of the M5 Cardputer ADV](/images/cardputer-adv_s.jpg)    | 12 GPIO (Grove, Header), screen, keyboard, mic, speaker, IR TX, SD card, IMU, battery, [standalone mode](#standalone-mode-for-the-cardputer)                  |
-| **M5 Stick S3** | ![Photo of the M5 Stick S3](/images/m5sticks3_s.jpg)      | 13 GPIO (Grove, Header), screen, mic, speaker, IR TX, IR RX, IMU, 3 buttons, battery                 |
-| **M5 StampS3**        | ![Photo of the M5 StampS3](/images/stamps3_s.jpg)             | 9 GPIO (exposed pins), 1 button                       |
-| **M5 AtomS3 Lite**    | ![Photo of the M5 Atom S3 Lite](/images/atom_s.jpg)            | 8 GPIO (Grove, Header), IR TX, 1 buttton                  |
-| **LILYGO T-Display** | ![Photo of the T-Display-S3](/images/t_displays3_s.jpg) | 13 GPIO (1 Qwicc), screen, 2 buttons |
-| **LILYGO T-Embed**    | ![Photo of the LILYGO T-Embed](/images/tembed_s.jpg)          | 9 GPIO (Grove, Header), screen, encoder, speaker, mic, SD card                                         |
-| **LILYGO T-Embed CC1101** | ![Photo of the LILYGO T-Embed CC1101](/images/tembedcc1101_s.jpg) | 4 GPIO (2x Qwiic), screen, encoder, speaker, mic, SD Card, CC1101, PN532, IR TX, IR RX , battery                                 |
-| **LILYGO T-Embed CC1101 Plus** | ![Photo of the LILYGO T-Embed CC1101 Plus](/images/tembedcc1101_s.jpg) | 4 GPIO (2x Qwiic), screen, encoder, speaker, mic, SD Card, CC1101, NRF24, PN532, IR TX, IR RX , battery                                 |
-| **Seeed Studio Xiao S3** | ![Photo of the Seeed Studio Xiao ESP32-S3](/images/xiaos3_s.jpg)        | 9 GPIO (exposed pins), 1 button        
+- `IR TX = GPIO2`
+- `IR RX = GPIO5`
 
-- **Other ESP32-S3-based Boards**
+## 相对原版的主要改动
 
-  - All boards based on the **ESP32-S3 can be supported**, provided they have at least **8 MB of flash.**
+### 1. 新增 S3 外接屏板型
 
-  - You can **flash the s3 dev-kit firmware onto any ESP32-S3 board.**
+为 `ESP32-S3 N16R8 + 外接 ST7789` 增加了专用板型配置：
 
-  - Keep in mind that the **default pin mapping in the firmware may not match** your specific board.
+- `DEVICE_S3DEVKIT_ST7789`
+- 屏幕参数和引脚宏写入 `platformio.ini`
 
-## Getting Started
+### 2. 新增 ST7789 视图
 
-[![Banner of the ESP32 Bus Pirate web flasher](images/flasher.jpg)](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/)
+新增文件：
 
-1. 🔧 Flash the firmware  
-   - Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/) to burn the firmware directly from a web browser.
-   - You can also burn it on [M5Burner](https://docs.m5stack.com/en/download), in the M5stick, AtomS3, M5StampS3 or Cardputer category.
+- `src/Views/S3DevKitSt7789DeviceView.h`
+- `src/Views/S3DevKitSt7789DeviceView.cpp`
 
-2. 🔌 Connect via Serial or Web
-   - Serial: any terminal app (see [Connect via Serial](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Serial))
-   - Web: configure Wi-Fi and access the CLI via browser (see [Wi-Fi Connection](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/00-Terminal))
+作用：
 
-3. 🧪 Use commands like:
-   ```bash
-   mode
-   help
-   scan
-   sniff
-   ...
-    ```
+- 外接屏启动显示
+- 模式页面显示
+- 波形和瀑布图显示
+- 避免重复初始化导致的屏幕异常
 
-## Wiki
+### 3. 新增 AO 四键输入
 
-[![Banner of the ESP32 Bus Pirate Wiki page](images/bus_pirate_wiki.png)](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/)
+新增文件：
 
-📚 **[Visit the Wiki](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki)** for detailed documentation on every mode and command.
+- `src/Inputs/S3DevKitAdInput.h`
+- `src/Inputs/S3DevKitAdInput.cpp`
 
-Includes:
-- [Terminal mode](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/00-Terminal) - About serial and web terminal.
-- [Mode overviews](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki) - Browse supported modes.
-- [Instruction syntax](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Instructions) - Master the instructions.
-- [Serial setup](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Serial) - Serial access via USB.
+作用：
 
-The wiki is the best place to learn how everything works.
+- 使用 `GPIO1` 读取 AD 按键模块
+- 适配 `LEFT / RIGHT / OK / DOWN`
+- 为当前四键模块加入 ADC 阈值
 
-## Scripting
+### 4. 调整带屏交互流程
 
-[![Banner of the ESP32 Bus Pirate Scripts page](images/bus_pirate_scripts.png)](https://github.com/geo-tp/ESP32-Bus-Pirate-Scripts/)
+修改了带屏设备的配置和输入路径，保证当前硬件可以直接使用屏幕和按键：
 
-🛠️ [**Automate interactions with the ESP32 Bus Pirate**](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Python) using **Python scripts over serial.**
+- `src/main.cpp`
+- `src/Config/TerminalTypeConfigurator.cpp`
+- `src/Config/WifiTypeConfigurator.cpp`
+- `src/Vendors/TdisplayWifiSetup.cpp`
+- `src/Vendors/TdisplayWifiSetup.h`
 
-**Examples and ready-to-use scripts** are available in the repository: [ESP32 Bus Pirate Scripts](https://github.com/geo-tp/ESP32-Bus-Pirate-Scripts).
+作用：
 
-**Including:** Logging data in a file, eeprom and flash dump, interracting with GPIOs, LED animation...
-   
-## Expander
-[![Banner of the ESP32 Bus Pirate Expander page](images/bus_pirate_exp.png)](https://github.com/geo-tp/ESP32-Bus-Expander)
+- 支持屏幕上的终端类型选择
+- 支持按键操作 Wi-Fi 选择界面
+- 修复 Wi-Fi 界面旋转方向
+- 将界面提示文字改成适配 `K1-K4`
 
+### 5. 修复 CC1101 / SUBGHZ 初始化
 
-🔌 **[Expand the capabilities of the ESP32 Bus Pirate](https://github.com/geo-tp/ESP32-Bus-Expander)** with additional hardware modules.  
-The Expander adds support for the **WiFi 5 GhZ** or other radio protocols.
+修改文件：
 
-![A Cardputer connected to an expander C5](images/cardputer_with_c5.jpg)
+- `src/Controllers/SubGhzController.cpp`
+- `src/Controllers/SubGhzController.h`
+- `src/Services/SubGhzService.cpp`
+- `src/Services/SubGhzService.h`
+- `src/Views/NoScreenDeviceView.cpp`
+- `src/Views/NoScreenDeviceView.h`
+- `lib/SmartRC-CC1101-Driver-Lib/ELECHOUSE_CC1101_SRC_DRV.cpp`
 
+作用：
 
-## Dock
-[![Banner of the ESP32 Bus Pirate Dock page](images/bus_pirate_dock.png)](https://github.com/AndreiVladescu/ESP32-Bus-Pirate-Dock)
+- 修复进入 `SUBGHZ` 后配置引脚时卡死
+- 去掉重复配置流程
+- 保留并修正 `provided SPI instance` 用法
+- 修复 `ESP32-S3` 上 `CC1101` 的 SPI / Reset 初始化问题
 
-🔧 **[A docking station for the ESP32 S3 DevKit](https://github.com/AndreiVladescu/ESP32-Bus-Pirate-Dock) designed to work with original Bus Pirate adapters.**  
-It allows you to plug and use the original [Bus Pirate](https://buspirate.com/) ecosystem of adapters and accessories.
+### 6. 本地 Web Flasher 改为当前固件
 
-![The ESP32 Bus Pirate dock board](images/bus_pirate_dock_board.png)
+修改文件：
 
-(Coming soon)
+- `webflasher/manifests/s3devkitn16r8.json`
 
-[![PCBWay Logo](images/pcbway_logo.png)](https://www.pcbway.com)
+作用：
 
+- 指向当前 fork 的自定义 merged 固件
+- 用于本地网页刷机
 
+## docs 目录内容
 
-## Command-Line Interfaces
+`docs` 目录保存的是这套硬件相关的资料和参考文件。
 
-The ESP32 Bus Pirate firmware provides three command-line interface (CLI) modes:
+### `docs/esp32-s3-n16-r8`
 
-| Interface         | Advantages                                                                 | Ideal for...                          |
-|------------------|-----------------------------------------------------------------------------|----------------------------------------|
-| **Web Interface** | - Accessible from any browser<br>- PC, tablets, mobiles<br>- Works over Wi-Fi<br>- No cables needed | Quick tests, demos, headless setups   |
-| **Serial Interface** | - Faster performance<br>- Instant responsiveness<br>- Handles large data smoothly | Intensive sessions, frequent interactions |
-| **Standalone** | - Only for the Cardputer<br>- On device keyboard<br>- On device screen | Portable sessions, Quick tests |
+- `ESP32-S3 N16R8` 开发板实物图
+- `ESP32-S3` datasheet
+- 开发板原理图
 
+### `docs/st7789`
 
-All interfaces share the same command structure and can be used interchangeably ([more details](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/00-Terminal)).
+- `ST7789` 屏幕实物图
+- 屏幕规格书
+- 屏幕驱动相关参考资料
+- 原厂附带的参考代码
 
-## Mobile Web Interface over WiFi
-![An iPhone screenshot showing the Bus Pirate firmware web interface](images/presentation_mobile.png)
+### `docs/CC1101`
 
-## Standalone Mode for the Cardputer
-![A Cardputer running the ESP32 Bus pirate in standalone mode](images/standalonemode_s.png)
+- `CC1101` 模块实物图
+- 引脚定义和模块资料图
 
-## Using the ESP32 Bus Pirate to speak UART over WiFi
-![A demo Using the ESP32 Bus pirate firmware with UART](images/demo2.gif)
+### `docs/PN532-RFID`
 
-## Contribute
-See [How To Contribute](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Contribute) section, which outlines a **simple way to add a new command** to any mode.
+- `PN532` 模块实物图
+- 模块接口资料图
 
-## Visuals Assets
+### `docs/power`
 
-#### [![Small logo of the ESP32 Bus Pirate firmware](images/logo_square_small.png)](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Visual-Assets)
+- 锂电池充放电模块实物图
+- 供电接线参考图
 
-See [images, logo, presentations, photo, video, illustrations](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Visual-Assets). These visuals can be **freely used in blog posts, documentation, videos, or articles** to help explain and promote the firmware.
+## 编译环境
 
+当前使用环境：
 
-## Warning
-> ⚠️ **Voltage Warning**: Devices should only operate at **3.3V** or **5V**.  
-> - Do **not** connect peripherals using other voltage levels — doing so may **damage your ESP32**.
+- `platformio` environment: `s3-devkit-n16-r8`
 
-> ⚠️ **Usage Warning**: This firmware is provided for **educational, diagnostic, and interoperability testing purposes only**.
-> - Do not use it to interfere with, probe, or manipulate devices without proper authorization.
-> - Avoid any unauthorized RF transmissions (e.g., sub-GHz) that could violate local regulations or disrupt networks and communications.
-> - The authors are not responsible for any misuse of this software or hardware, including legal consequences resulting from unauthorized access or signal emission.
-> - Always stay within the bounds of your country’s laws and responsible disclosure policies.
+## 说明
 
-
+- 这份 fork 说明只描述当前这套硬件适配
+- 使用方法、接线和调试步骤见根目录 userguide.pdf

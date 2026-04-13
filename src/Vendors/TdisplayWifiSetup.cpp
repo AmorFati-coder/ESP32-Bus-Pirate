@@ -1,4 +1,4 @@
-#if defined(DEVICE_TDISPLAYS3)
+#if defined(DEVICE_TDISPLAYS3) || defined(DEVICE_S3DEVKIT_ST7789)
 
 #include "TdisplayWifiSetup.h"
 
@@ -7,9 +7,8 @@
 #include <esp_sleep.h>
 
 #include "Inputs/InputKeys.h"
-#include "Views/TdisplayDeviceView.h"
-
 static lgfx::LGFX_Device* g_tft = nullptr;
+static IInput* g_input = nullptr;
 
 static char lastInput = KEY_NONE;
 static int lastPos = 0;
@@ -75,6 +74,9 @@ void tick() {
 }
 
 char readChar() {
+    if (g_input) {
+        return g_input->readChar();
+    }
     tick();
     char c = lastInput;
     lastInput = KEY_NONE;
@@ -161,8 +163,13 @@ String selectWifiNetwork() {
     tft.setTextFont(2);
     tft.setTextSize(1);
     tft.setTextColor(HELP_COLOR, TFT_BLACK);
-    tft.drawString("Short press any button to change SSID", 10, tft.height() - 35);
-    tft.drawString("Long press top button to accept", 10, tft.height() - 20);
+    #if defined(DEVICE_S3DEVKIT_ST7789)
+        tft.drawString("K1: next SSID   K2: previous SSID", 10, tft.height() - 35);
+        tft.drawString("K3: accept", 10, tft.height() - 20);
+    #else
+        tft.drawString("Short press any button to change SSID", 10, tft.height() - 35);
+        tft.drawString("Long press top button to accept", 10, tft.height() - 20);
+    #endif
 
     while (true) {
         tft.fillRect(0, 40, tft.width(), tft.height() - 80, TFT_BLACK);
@@ -213,9 +220,15 @@ String enterText(const String& label) {
     tft.setTextColor(HELP_COLOR);
     tft.setTextFont(2);
     tft.setTextSize(1);
-    tft.drawString("Top Button press:    short = next, long = select", X_START_HLP, Y_START_HLP);
-    tft.drawString("Bottom Button press: short = prev, long = next line", X_START_HLP, Y_START_HLP + 14);
-    tft.drawString("[<-] : delete a char. [OK] Enter", X_START_HLP, Y_START_HLP + 28);
+    #if defined(DEVICE_S3DEVKIT_ST7789)
+        tft.drawString("K1: next char   K2: previous char", X_START_HLP, Y_START_HLP);
+        tft.drawString("K3: select / OK   K4: next line", X_START_HLP, Y_START_HLP + 14);
+        tft.drawString("[<-] delete   [OK] finish", X_START_HLP, Y_START_HLP + 28);
+    #else
+        tft.drawString("Top Button press:    short = next, long = select", X_START_HLP, Y_START_HLP);
+        tft.drawString("Bottom Button press: short = prev, long = next line", X_START_HLP, Y_START_HLP + 14);
+        tft.drawString("[<-] : delete a char. [OK] Enter", X_START_HLP, Y_START_HLP + 28);
+    #endif
 
     // draw charset on screen
     tft.setTextColor(TFT_GREEN);
@@ -306,13 +319,18 @@ String enterText(const String& label) {
 }
 
 // ---------------- Public entry ----------------
-bool setupTdisplayWifi(IDeviceView& view) {
+bool setupTdisplayWifi(IDeviceView& view, IInput& input) {
   // bind screen pointer once
     g_tft = static_cast<lgfx::LGFX_Device*>(view.getScreen());
+    g_input = &input;
     if (!g_tft) return false;
 
     auto& tft = *g_tft;
-    tft.setRotation(3);
+    #if defined(DEVICE_S3DEVKIT_ST7789)
+        tft.setRotation(LCD_ST7789_ROTATION);
+    #else
+        tft.setRotation(3);
+    #endif
     String selectedSsid, ssid, password;
 
     while (true) {

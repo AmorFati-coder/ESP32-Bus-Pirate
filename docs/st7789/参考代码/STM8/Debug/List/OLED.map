@@ -1,0 +1,245 @@
+###############################################################################
+#
+# IAR ELF Linker V2.20.1.176 for STM8                     18/Nov/2019  18:18:30
+# Copyright 2010-2015 IAR Systems AB.
+#
+#    Output file  =  
+#        C:\Users\Administrator\Documents\IAR\STM8\Debug\Exe\OLED.out
+#    Map file     =  
+#        C:\Users\Administrator\Documents\IAR\STM8\Debug\List\OLED.map
+#    Command line =  
+#        C:\Users\Administrator\Documents\IAR\STM8\Debug\Obj\main.o --redirect
+#        _Printf=_PrintfFullNoMb --redirect _Scanf=_ScanfFullNoMb -o
+#        C:\Users\Administrator\Documents\IAR\STM8\Debug\Exe\OLED.out --map
+#        C:\Users\Administrator\Documents\IAR\STM8\Debug\List\OLED.map --config
+#        "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.3\stm8\config\lnkstm8s103f3.icf" --config_def _CSTACK_SIZE=0x100
+#        --config_def _HEAP_SIZE=0x100 --entry __iar_program_start --debug_lib
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+__SystemLibrary            = DLib
+__code_model               = medium_or_large
+__core                     = stm8
+__data_model               = medium
+__dlib_file_descriptor     = 0
+__dlib_full_locale_support = 0
+__rt_version               = 4
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A1":  place at start of [0x000000-0x0000ff] { rw section .vregs };
+"A2":  place at end of [0x000000-0x0003ff] { block CSTACK };
+"A3":  place at start of [0x008000-0x009fff] { block INTVEC };
+"P3":  place in [from 0x008000 to 0x009fff] {
+          ro section __DLIB_PERTHREAD_init, ro section .far.data_init,
+          ro section .far_func.textrw_init, ro section .huge.data_init,
+          ro section .huge_func.textrw_init, ro section .iar.init_table,
+          ro section .init_array, ro section .near.data_init,
+          ro section .near.rodata, ro section .near_func.text,
+          ro section .near_func.textrw_init, ro section .tiny.data_init,
+          ro section .tiny.rodata_init };
+"P4":  place in [from 0x008000 to 0x009fff] {
+          ro section .far.rodata, ro section .far_func.text };
+"P5":  place in [from 0x008000 to 0x009fff] {
+          ro section .huge.rodata, ro section .huge_func.text };
+
+  Section          Kind      Address   Size  Object
+  -------          ----      -------   ----  ------
+"A1":                                   0xc
+  .vregs           uninit   0x000000    0xc  vregs.o [4]
+                          - 0x00000c    0xc
+
+"A2":                                 0x100
+  CSTACK                    0x000300  0x100  <Block>
+    CSTACK         uninit   0x000300  0x100  <Block tail>
+                          - 0x000400  0x100
+
+Absolute sections, part 1 of 3:         0x1
+  .near.noinit     uninit   0x00500a    0x1  main.o [1]
+                          - 0x00500b    0x1
+
+Absolute sections, part 2 of 3:         0x4
+  .near.noinit     uninit   0x00500c    0x1  main.o [1]
+  .near.noinit     uninit   0x00500d    0x1  main.o [1]
+  .near.noinit     uninit   0x00500e    0x1  main.o [1]
+  .near.noinit     uninit   0x00500f    0x1  main.o [1]
+                          - 0x005010    0x4
+
+Absolute sections, part 3 of 3:         0x3
+  .near.noinit     uninit   0x005011    0x1  main.o [1]
+  .near.noinit     uninit   0x005012    0x1  main.o [1]
+  .near.noinit     uninit   0x005013    0x1  main.o [1]
+                          - 0x005014    0x3
+
+"A3":                                  0x80
+  INTVEC                    0x008000   0x80  <Block>
+    .intvec        const    0x008000   0x80  interrupt.o [4]
+                          - 0x008080   0x80
+
+"P3":                                 0x160
+  .near.rodata     const    0x008080  0x160  main.o [1]
+                          - 0x0081e0  0x160
+
+"P4":                                  0xe6
+  .far_func.text   ro code  0x0081e0   0x78  vreg_util.o [4]
+  .far_func.text   ro code  0x008258   0x1e  init.o [4]
+  .far_func.text   ro code  0x008276   0x17  cstartup.o [4]
+  .far_func.text   ro code  0x00828d   0x16  __dbg_xxexit.o [3]
+  .far_func.text   ro code  0x0082a3    0xe  far_util.o [4]
+  .far_func.text   ro code  0x0082b1    0x6  cexit.o [4]
+  .far_func.text   ro code  0x0082b7    0x4  interrupt.o [4]
+  .far_func.text   ro code  0x0082bb    0x4  exit.o [4]
+  .far_func.text   ro code  0x0082bf    0x3  low_level_init.o [4]
+  .far_func.text   ro code  0x0082c2    0x3  unhandled_exception.o [4]
+  .far_func.text   ro code  0x0082c5    0x1  __dbg_break.o [3]
+                          - 0x0082c6   0xe6
+
+"P5":                                 0x585
+  .huge_func.text  ro code  0x0082c6  0x2cb  main.o [1]
+  .huge_func.text  ro code  0x008591  0x177  main.o [1]
+  .huge_func.text  ro code  0x008708   0xb6  main.o [1]
+  .huge_func.text  ro code  0x0087be   0x3c  main.o [1]
+  .huge_func.text  ro code  0x0087fa   0x36  main.o [1]
+  .huge_func.text  ro code  0x008830   0x1b  main.o [1]
+                          - 0x00884b  0x585
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module                 ro code  ro data  rw data  rw data
+                                                       (abs)
+    ------                 -------  -------  -------  -------
+C:\Users\Administrator\Documents\IAR\STM8\Debug\Obj: [1]
+    main.o                   1 413      352                 8
+    ---------------------------------------------------------
+    Total:                   1 413      352                 8
+
+command line: [2]
+    ---------------------------------------------------------
+    Total:
+
+dbgstm8mmd.a: [3]
+    __dbg_break.o                1
+    __dbg_xxexit.o              22
+    ---------------------------------------------------------
+    Total:                      23
+
+dlstm8mmn.a: [4]
+    cexit.o                      6
+    cstartup.o                  23
+    exit.o                       4
+    far_util.o                  14
+    init.o                      30
+    interrupt.o                  4      128
+    low_level_init.o             3
+    unhandled_exception.o        3
+    vreg_util.o                120
+    vregs.o                                       12
+    ---------------------------------------------------------
+    Total:                     207      128       12
+
+    Linker created                               256
+-------------------------------------------------------------
+    Grand Total:             1 643      480      268        8
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                    Address   Size  Type      Object
+-----                    -------   ----  ----      ------
+?b0                     0x000000         Data  Gb  vregs.o [4]
+?b1                     0x000001         Data  Gb  vregs.o [4]
+?b10                    0x00000a         Data  Gb  vregs.o [4]
+?b11                    0x00000b         Data  Gb  vregs.o [4]
+?b2                     0x000002         Data  Gb  vregs.o [4]
+?b3                     0x000003         Data  Gb  vregs.o [4]
+?b4                     0x000004         Data  Gb  vregs.o [4]
+?b5                     0x000005         Data  Gb  vregs.o [4]
+?b6                     0x000006         Data  Gb  vregs.o [4]
+?b7                     0x000007         Data  Gb  vregs.o [4]
+?b8                     0x000008         Data  Gb  vregs.o [4]
+?b9                     0x000009         Data  Gb  vregs.o [4]
+?e0                     0x000001         Data  Gb  vregs.o [4]
+?e1                     0x000005         Data  Gb  vregs.o [4]
+?e2                     0x000009         Data  Gb  vregs.o [4]
+?epilogue_l2            0x008239         Code  Gb  vreg_util.o [4]
+?l0                     0x000000         Data  Gb  vregs.o [4]
+?l1                     0x000004         Data  Gb  vregs.o [4]
+?l2                     0x000008         Data  Gb  vregs.o [4]
+?load24_e1_0x           0x0082a3         Code  Gb  far_util.o [4]
+?mov_e1_e0              0x008241         Code  Gb  vreg_util.o [4]
+?mov_e2_e0              0x00824e         Code  Gb  vreg_util.o [4]
+?mov_l1_l0              0x00823e         Code  Gb  vreg_util.o [4]
+?mov_l2_l0              0x00824b         Code  Gb  vreg_util.o [4]
+?mov_w3_w1              0x008244         Code  Gb  vreg_util.o [4]
+?mov_w5_w1              0x008251         Code  Gb  vreg_util.o [4]
+?pop_l2                 0x008222         Code  Gb  vreg_util.o [4]
+?push_l2                0x0081fc         Code  Gb  vreg_util.o [4]
+?push_w4                0x0081e0         Code  Gb  vreg_util.o [4]
+?w0                     0x000000         Data  Gb  vregs.o [4]
+?w1                     0x000002         Data  Gb  vregs.o [4]
+?w2                     0x000004         Data  Gb  vregs.o [4]
+?w3                     0x000006         Data  Gb  vregs.o [4]
+?w4                     0x000008         Data  Gb  vregs.o [4]
+?w5                     0x00000a         Data  Gb  vregs.o [4]
+CSTACK$$Base            0x000300          --   Gb  - Linker created -
+CSTACK$$Limit           0x000400          --   Gb  - Linker created -
+INTVEC$$Base            0x008000          --   Gb  - Linker created -
+INTVEC$$Limit           0x008080          --   Gb  - Linker created -
+IO_init                 0x0087be   0x3c  Code  Gb  main.o [1]
+OLED_clear              0x0082e8   0x66  Code  Gb  main.o [1]
+OLED_full               0x00834e   0x6d  Code  Gb  main.o [1]
+OLED_init               0x0083bb  0x1d6  Code  Gb  main.o [1]
+Region$$Table$$Base   0x00000000          --   Gb  - Linker created -
+Region$$Table$$Limit  0x00000000          --   Gb  - Linker created -
+SPI_SendByte            0x0087fa   0x36  Code  Gb  main.o [1]
+TFT_SEND_CMD            0x0082c6   0x11  Code  Gb  main.o [1]
+TFT_SEND_DATA           0x0082d7   0x11  Code  Gb  main.o [1]
+_A_PC_CR1               0x00500d    0x1  Data  Gb  main.o [1]
+_A_PC_CR2               0x00500e    0x1  Data  Gb  main.o [1]
+_A_PC_DDR               0x00500c    0x1  Data  Gb  main.o [1]
+_A_PC_ODR               0x00500a    0x1  Data  Gb  main.o [1]
+_A_PD_CR1               0x005012    0x1  Data  Gb  main.o [1]
+_A_PD_CR2               0x005013    0x1  Data  Gb  main.o [1]
+_A_PD_DDR               0x005011    0x1  Data  Gb  main.o [1]
+_A_PD_ODR               0x00500f    0x1  Data  Gb  main.o [1]
+__DebugBreak            0x0082c5    0x1  Code  Gb  __dbg_break.o [3]
+__exit                  0x00828d   0x16  Code  Gb  __dbg_xxexit.o [3]
+__iar_data_init2        0x008258   0x1e  Code  Gb  init.o [4]
+__iar_program_start     0x008276         Code  Gb  cstartup.o [4]
+__iar_unhandled_exception
+                        0x0082c2         Code  Gb  unhandled_exception.o [4]
+__intvec                0x008000         Data  Gb  interrupt.o [4]
+__low_level_init        0x0082bf    0x3  Code  Gb  low_level_init.o [4]
+_exit                   0x0082b1         Code  Gb  cexit.o [4]
+china_char              0x008080  0x160  Data  Gb  main.o [1]
+delay_ms                0x008830   0x1b  Code  Gb  main.o [1]
+display_char16_16       0x008708   0xb6  Code  Gb  main.o [1]
+exit                    0x0082bb    0x4  Code  Gb  exit.o [4]
+main                    0x008591  0x177  Code  Gb  main.o [1]
+
+
+[1] = C:\Users\Administrator\Documents\IAR\STM8\Debug\Obj
+[2] = command line
+[3] = dbgstm8mmd.a
+[4] = dlstm8mmn.a
+
+  1 643 bytes of readonly  code memory
+    480 bytes of readonly  data memory
+    268 bytes of readwrite data memory (+ 8 absolute)
+
+Errors: none
+Warnings: none

@@ -4,6 +4,7 @@
 #include <Views/M5DeviceView.h>
 #include <Views/WebTerminalView.h>
 #include <Views/NoScreenDeviceView.h>
+#include <Views/S3DevKitSt7789DeviceView.h>
 #include <Views/TembedDeviceView.h>
 #include <Views/TdisplayDeviceView.h>
 #include <Views/CardputerTerminalView.h>
@@ -14,6 +15,7 @@
 #include <Inputs/StampS3Input.h>
 #include <Inputs/TembedInput.h>
 #include <Inputs/TdisplayInput.h>
+#include <Inputs/S3DevKitAdInput.h>
 #include <Inputs/S3DevKitInput.h>
 #include <Providers/DependencyProvider.h>
 #include <Dispatchers/ActionDispatcher.h>
@@ -127,6 +129,10 @@ void setup() {
         deviceView.logo();
         deviceInput.waitPress(3000);
         deviceView.clear();
+    #elif defined(DEVICE_S3DEVKIT_ST7789)
+        S3DevKitSt7789DeviceView deviceView;
+        S3DevKitAdInput deviceInput;
+        deviceView.initialize();
     #else
         // Fallback to S3 dev kit
         NoScreenDeviceView deviceView;
