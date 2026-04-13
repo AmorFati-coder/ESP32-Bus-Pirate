@@ -14,7 +14,7 @@ TerminalTypeEnum TerminalTypeConfigurator::configure() {
 
     int selected = 1; // Serial
 
-    #if defined(DEVICE_M5STAMPS3) || defined(DEVICE_S3DEVKIT)
+    #if defined(DEVICE_M5STAMPS3) || (defined(DEVICE_S3DEVKIT) && !defined(DEVICE_S3DEVKIT_ST7789))
         selected = selector.selectHeadless();
     #else
         selected = selector.select(
